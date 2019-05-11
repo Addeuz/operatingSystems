@@ -1,0 +1,13 @@
+CLUTTER_IM_MODULE=xim
+destfile.txt
+Makefile
+readfile.txt
+task1
+task1.c
+task2
+task2.c
+task3
+task3~
+task3.c
+task3.c~
+testdir

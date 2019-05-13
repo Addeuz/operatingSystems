@@ -10,5 +10,7 @@ task3
 task3~
 task3.c
 task3.c~
+test2.txt
 testdir
+test.txt
 TODO.md

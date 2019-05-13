@@ -10,4 +10,4 @@ task3
 task3~
 task3.c
 task3.c~
-testdir
+test

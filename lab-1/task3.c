@@ -91,10 +91,10 @@ void handle_command(char words[][MAX_WORD_LENGTH + 1], int nr_words) {
 	}
 
 	// If second argument is >, writes to the file right of it
-	if(strcmp(argv[1], (char*)">") == 0){
-	  fclose(stdout);
+	if(strcmp(argv[1], ">") == 0){
+	  close(1);
 	  
-	  FILE *fw = fopen(argv[2], "w");
+	  open(argv[2], O_WRONLY | O_CREAT, 0666);
 
 	  argv[1] = NULL;
 	  execvp(argv[0], argv);

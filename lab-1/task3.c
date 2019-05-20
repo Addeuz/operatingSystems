@@ -68,51 +68,49 @@ void handle_command(char words[][MAX_WORD_LENGTH + 1], int nr_words) {
 
         // For extra points: Handle I/O redirect with "<" and ">"
 
-      pid_t child_pid;
-      int child_status;
+        pid_t child_pid;
+        int child_status;
 
-      //FILE *fr = fopen(argv[1], "r");
+        //FILE *fr = fopen(argv[1], "r");
 
        //fclose(fr);
 
       
-      child_pid = fork();
-      if(child_pid == 0) {
-	/* This is done by the child process. */
-	char *argv[nr_words];
-	for(int i = 0; i <= nr_words; i++) {
-	  argv[i] = words[i];
-	}
-	argv[nr_words] = NULL;
+        child_pid = fork();
+        if(child_pid == 0) {
+    	    /* This is done by the child process. */
+            char *argv[nr_words];
+            for(int i = 0; i <= nr_words; i++) {
+                argv[i] = words[i];
+    	    }
+	        argv[nr_words] = NULL;
 
-	// Only used so that ls can be used by itself
-	if(argv[1] == NULL) {
-	  execvp(argv[0], argv);
-	}
+    	    // Only used so that ls can be used by itself
+            if(argv[1] == NULL) {
+                execvp(argv[0], argv);
+            }
 
-	// If second argument is >, writes to the file right of it
-	if(strcmp(argv[1], ">") == 0){
-	  close(1);
-	  
-	  open(argv[2], O_WRONLY | O_CREAT, 0666);
+            // If second argument is >, writes to the file right of it
+            if(strcmp(argv[1], ">") == 0){
+                close(1);
+                
+                open(argv[2], O_WRONLY | O_CREAT, 0666);
 
-	  argv[1] = NULL;
-	  execvp(argv[0], argv);
-	}
-	
-	execvp(argv[0], argv);
-
+                argv[1] = NULL;
+                execvp(argv[0], argv);
+            }
+        
+            execvp(argv[0], argv);
     
-	/* If execvp returns, it must have failed. */
+	        /* If execvp returns, it must have failed. */
+            printf("skalman: Unknown command\n");
+            exit(0);
+        } else {
+            /* This is run by the parent.  Wait for the child
+            to terminate. */
+            wait(&child_status);
 
-	printf("skalman: Unknown command\n");
-	exit(0);
-      } else {
-	/* This is run by the parent.  Wait for the child
-        to terminate. */
-        wait(&child_status);
-
-      }
+        }
       
     }
 } // handle_command
